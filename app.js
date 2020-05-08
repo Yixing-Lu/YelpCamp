@@ -8,7 +8,8 @@ var express 		= require("express"),
 	seedDB = require("./seeds"),
 	passport = require("passport"),
 	LocalStrategy = require("passport-local"),
-	methodOverride = require("method-override")
+	methodOverride = require("method-override"),
+	flash = require("connect-flash")
 
 // requring routes 
 var commentRoutes = require("./routes/comments")
@@ -24,6 +25,7 @@ mongoose.connect(url,{useNewUrlParser: true,useUnifiedTopology: true, useCreateI
 
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
+app.use(flash())
 
 
 // seedDB(); // seed the database
@@ -43,7 +45,10 @@ passport.deserializeUser(User.deserializeUser())
 // middleware to add currentUser to every route
 app.use(function(req,res,next){
 	res.locals.currentUser = req.user;
+	res.locals.error = req.flash("error");
+	res.locals.success = req.flash("success");
 	next();
+
 })
 
 // express router
@@ -51,9 +56,9 @@ app.use("/",indexRoutes)
 app.use("/campgrounds",campgroundRoutes) // add /campgrounds before all routes
 app.use("/campgrounds/:id/comments",commentRoutes)
 
-// app.listen(3000, function(){
-// 	console.log("YelpCamp Server has started!");
-// })
-app.listen(process.env.PORT, process.env.IP);
+app.listen(3000, function(){
+	console.log("YelpCamp Server has started!");
+})
+// app.listen(process.env.PORT, process.env.IP);
 
 
