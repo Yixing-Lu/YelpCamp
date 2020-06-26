@@ -3,7 +3,7 @@
 YelpCamp is a Node.js web application with RESTful routing project where users can create and review campgrounds.
 
 ## Demo
-Please visit https://yixinglu-yelpcamp.herokuapp.com/campgrounds
+Please visit https://yixinglu-yelpcamp.herokuapp.com/
 
 ## Features
 
